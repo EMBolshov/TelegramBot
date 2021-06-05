@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TelegramBot.Api.Models;
 using TelegramBot.Api.Services;
+using TelegramBot.Infrastructure;
 
 namespace TelegramBot.Api
 {
@@ -20,8 +21,9 @@ namespace TelegramBot.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            
+
             services
+                .AddSingleton<IBotDbRepository>(_ => new BotDbRepository(Configuration.GetConnectionString("BotDbContext")))
                 .Configure<BotSettings.Options>(Configuration.GetSection(BotSettings.Options.Name))
                 .AddSingleton<BotSettings>()
                 .AddSingleton<IBotService, BotService>();
@@ -33,7 +35,7 @@ namespace TelegramBot.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseRouting();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());

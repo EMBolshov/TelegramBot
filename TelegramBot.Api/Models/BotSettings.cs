@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Telegram.Bot;
 using TelegramBot.Api.Models.Commands;
+using TelegramBot.Infrastructure;
 
 namespace TelegramBot.Api.Models
 {
@@ -10,12 +10,13 @@ namespace TelegramBot.Api.Models
     {
         public readonly TelegramBotClient Client;
         public readonly IReadOnlyCollection<ICommand> Commands;
-
-        public BotSettings(IOptions<Options> options)
+        
+        public BotSettings(IOptions<Options> options, IBotDbRepository repository)
         {
             Commands = new List<ICommand>
             {
-                new TestCommand()
+                new TestCommand(),
+                new SaveChordCommand(repository)
             };
 
             Client = new TelegramBotClient(options.Value.AccessToken);
@@ -24,7 +25,7 @@ namespace TelegramBot.Api.Models
             
             Client.SetWebhookAsync(hook);
         }
-        
+
         public class Options
         {
             public const string Name = nameof(BotSettings);

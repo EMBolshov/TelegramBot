@@ -9,4 +9,9 @@
       <PackageReference Include="Telegram.Bot" Version="15.7.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\TelegramBot.Infrastructure123\TelegramBot.Infrastructure123.csproj" />
+      <ProjectReference Include="..\TelegramBot.Infrastructure\TelegramBot.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
