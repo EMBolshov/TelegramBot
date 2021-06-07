@@ -19,7 +19,10 @@ namespace TelegramBot.Api.Controllers
         [Route("api/message/test")]
         public async Task<OkResult> Update([FromBody] Update update)
         {
-            var msg = new Message {Text = "saveChord Am e:O||---|---|---|h:-||-O-|---|---|g:-||---|-O-|---|d:-||---|-O-|---|A:O||---|---|---|E:O||---|---|---|"};
+            var msg = new Message
+            {
+                Text = "saveChord Am e:O||---|---|---|h:-||-O-|---|---|g:-||---|-O-|---|d:-||---|-O-|---|A:O||---|---|---|E:O||---|---|---|"
+            };
 
             await _bot.ExecuteCommand(msg);
 

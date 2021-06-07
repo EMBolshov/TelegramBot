@@ -16,7 +16,8 @@ namespace TelegramBot.Api.Models
             Commands = new List<ICommand>
             {
                 new TestCommand(),
-                new SaveChordCommand(repository)
+                new SaveChordCommand(repository),
+                new SaveSongCommand(repository)
             };
 
             Client = new TelegramBotClient(options.Value.AccessToken);

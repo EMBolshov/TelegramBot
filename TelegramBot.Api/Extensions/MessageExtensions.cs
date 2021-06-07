@@ -26,5 +26,22 @@ namespace TelegramBot.Api.Extensions
                 Fingering = parts[2]
             };
         }
+
+        public static Song ParseSong(this Message message)
+        {
+            //Format: saveSong Name Beat Chords Capo Text
+            //Example: saveSong|Дайте Танк (!) - Бардак|Восьмерка|Em, D#, C, Bm, F#, B, Am, G, D|0|Число фонарей умножая на два ...
+            
+            var parts = message.Text.Split('|');
+            
+            return new Song
+            {
+                Name = parts[1],
+                Beat = parts[2],
+                Chords = parts[3],
+                Capo = parts[4],
+                Text = parts[5]
+            };
+        }
     }
 }

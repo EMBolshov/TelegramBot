@@ -13,9 +13,19 @@ namespace TelegramBot.Infrastructure
 
         public void AddChord(Chord chord)
         {
+            AddEntity(chord);
+        }
+        
+        public void AddSong(Song song)
+        {
+            AddEntity(song);
+        }
+
+        private static void AddEntity(IEntity entity)
+        {
             using (var context = new BotDbContext(_connectionString))
             {
-                context.Add(chord);
+                context.Add(entity);
                 context.SaveChanges();
             }
         }

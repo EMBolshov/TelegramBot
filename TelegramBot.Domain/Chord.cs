@@ -1,9 +1,9 @@
 ﻿namespace TelegramBot.Domain
 {
-    public class Chord
+    public class Chord : IEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Fingering { get; set; }
+        public int Id { get; }
+        public string Name { get; init; }
+        public string Fingering { get; init; }
     }
 }
