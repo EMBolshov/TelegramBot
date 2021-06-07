@@ -15,7 +15,7 @@ namespace TelegramBot.Api.Models
         {
             Commands = new List<ICommand>
             {
-                new TestCommand(),
+                new EchoCommand(),
                 new SaveChordCommand(repository),
                 new SaveSongCommand(repository)
             };

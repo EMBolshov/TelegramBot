@@ -4,16 +4,16 @@ using Telegram.Bot.Types;
 
 namespace TelegramBot.Api.Models.Commands
 {
-    public class TestCommand : ICommand
+    public class EchoCommand : ICommand
     {
-        public string Name => "test";
+        public string Name => "echo";
         
         public async Task Execute(Message message, TelegramBotClient client)
         {
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
 
-            await client.SendTextMessageAsync(chatId, "Ky", replyToMessageId: messageId);
+            await client.SendTextMessageAsync(chatId, $"Echo: {message.Text}", replyToMessageId: messageId);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace TelegramBot.Api.Extensions
             //TODO: Do something with fingering format
 
             //Format:
-            /*saveChord Am e:-||-O-|---|---| (but fingering is in one line)
+            /*savechord Am e:-||-O-|---|---| (but fingering is in one line)
                            h:-||---|---|-O-|
                            g:-||---|---|-O-|
                            d:-||---|---|-O-|
@@ -29,8 +29,8 @@ namespace TelegramBot.Api.Extensions
 
         public static Song ParseSong(this Message message)
         {
-            //Format: saveSong Name Beat Chords Capo Text
-            //Example: saveSong|Дайте Танк (!) - Бардак|Восьмерка|Em, D#, C, Bm, F#, B, Am, G, D|0|Число фонарей умножая на два ...
+            //Format: savesong Name Beat Chords Capo Text
+            //Example: savesong|Дайте Танк (!) - Бардак|Восьмерка|Em, D#, C, Bm, F#, B, Am, G, D|0|Число фонарей умножая на два ...
             
             var parts = message.Text.Split('|');
             

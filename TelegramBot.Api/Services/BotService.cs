@@ -21,7 +21,7 @@ namespace TelegramBot.Api.Services
 
         public Task ExecuteCommand(Message message)
         {
-            return _commands.Single(c => message.Text.StartsWith(c.Name)).Execute(message, _client);
+            return _commands.Single(c => message.Text.Contains(c.Name)).Execute(message, _client);
         }
     }
 }

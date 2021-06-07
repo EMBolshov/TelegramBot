@@ -21,7 +21,7 @@ namespace TelegramBot.Api.Controllers
         {
             var msg = new Message
             {
-                Text = "saveChord Am e:O||---|---|---|h:-||-O-|---|---|g:-||---|-O-|---|d:-||---|-O-|---|A:O||---|---|---|E:O||---|---|---|"
+                Text = "savechord Am e:O||---|---|---|h:-||-O-|---|---|g:-||---|-O-|---|d:-||---|-O-|---|A:O||---|---|---|E:O||---|---|---|"
             };
 
             await _bot.ExecuteCommand(msg);
