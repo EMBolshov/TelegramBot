@@ -9,7 +9,7 @@ WITH (
     );
 
 ALTER TABLE public."Chords"
-    OWNER to rxkoxwvrchcimp;
+    OWNER to nahageixgwxfnl;
 
 CREATE TABLE public."Songs"
 (
@@ -25,5 +25,19 @@ WITH (
     );
 
 ALTER TABLE public."Songs"
-    OWNER to rxkoxwvrchcimp;
+    OWNER to nahageixgwxfnl;
 
+CREATE TABLE public."Logs"
+(
+    "Id" serial,
+    "Timestamp" timestamp,
+    "Level" varchar,
+    "Message" text
+)
+    WITH (
+        OIDS = FALSE
+        );
+
+ALTER TABLE public."Logs"
+    OWNER to nahageixgwxfnl;
+	

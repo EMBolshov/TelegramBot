@@ -1,22 +1,27 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Telegram.Bot.Types;
 using TelegramBot.Api.Services;
 
 namespace TelegramBot.Api.Controllers
 {
     [ApiController]
+    [Route("api/manual")]
     public class ManualController : Controller
     {
         private readonly IBotService _bot;
-
-        public ManualController(IBotService bot)
+        private readonly ILogger<ManualController> _logger;
+        
+        public ManualController(IBotService bot, ILogger<ManualController> logger)
         {
             _bot = bot;
+            _logger = logger;
         }
 
         [HttpPost]
-        [Route("api/message/test")]
+        [Route("test")]
         public async Task<OkResult> Update([FromBody] Update update)
         {
             var msg = new Message
@@ -26,6 +31,19 @@ namespace TelegramBot.Api.Controllers
 
             await _bot.ExecuteCommand(msg);
 
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("healthcheck")]
+        public OkResult HealthCheck()
+        {
+            var message = "I'm alive";
+            _logger.LogInformation($"{message}");
+
+            var ex = new InvalidOperationException("Invalid oper");
+            _logger.LogError($"Error test:{ex.Message}");
+            _logger.LogError($"Error with ex test:{ex.Message}, Exception: {ex}");
             return Ok();
         }
     }
