@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Telegram.Bot;
 using TelegramBot.Api.Models.Commands;
@@ -10,9 +11,11 @@ namespace TelegramBot.Api.Models
     {
         public readonly TelegramBotClient Client;
         public readonly IReadOnlyCollection<ICommand> Commands;
+        private readonly ILogger<BotSettings> _logger;
         
-        public BotSettings(IOptions<Options> options, IBotDbRepository repository)
+        public BotSettings(IOptions<Options> options, IBotDbRepository repository, ILogger<BotSettings> logger)
         {
+            _logger = logger;
             Commands = new List<ICommand>
             {
                 new EchoCommand(),
@@ -25,6 +28,7 @@ namespace TelegramBot.Api.Models
             var hook = $"{options.Value.AppBaseUrl}/api/message/update";
             
             Client.SetWebhookAsync(hook);
+            _logger.LogWarning($"Webhook: {hook}");
         }
 
         public class Options
