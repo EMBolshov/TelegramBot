@@ -31,6 +31,11 @@ namespace TelegramBot.Api.Models
             _logger.LogWarning($"Webhook: {hook}");
         }
 
+        public TelegramBotClient InitBot()
+        {
+            return Client;
+        }
+
         public class Options
         {
             public const string Name = nameof(BotSettings);

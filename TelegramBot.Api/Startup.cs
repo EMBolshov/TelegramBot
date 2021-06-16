@@ -40,6 +40,8 @@ namespace TelegramBot.Api
             app.UseRouting();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+            app.ApplicationServices.GetService<BotSettings>()!.InitBot();
         }
     }
 }
