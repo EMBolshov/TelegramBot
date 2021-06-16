@@ -23,6 +23,7 @@ namespace TelegramBot.Api.Controllers
         [Route("api/message/update")]
         public async Task<OkResult> Update([FromBody] Update update)
         {
+            _logger.LogWarning($"Update called, Update.Message.Text: {update.Message.Text}");
             try
             {
                 await _bot.ExecuteCommand(update.Message);

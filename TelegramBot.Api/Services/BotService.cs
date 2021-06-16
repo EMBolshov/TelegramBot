@@ -24,6 +24,8 @@ namespace TelegramBot.Api.Services
 
         public Task ExecuteCommand(Message message)
         {
+            _logger.LogWarning($"Message.Text: > {message.Text}");
+            _commands.ToList().ForEach(c => _logger.LogWarning($"Command: {c.Name}"));
             var cmd = _commands.Single(c => message.Text.StartsWith(c.Name));
             _logger.LogWarning($"Message.Text: {message.Text}, Command: {cmd.Name}");
             return cmd.Execute(message, _client);
