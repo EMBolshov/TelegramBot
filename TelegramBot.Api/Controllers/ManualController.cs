@@ -39,11 +39,7 @@ namespace TelegramBot.Api.Controllers
         public OkResult HealthCheck()
         {
             var message = "I'm alive";
-            _logger.LogInformation($"{message}");
-
-            var ex = new InvalidOperationException("Invalid oper");
-            _logger.LogError($"Error test:{ex.Message}");
-            _logger.LogError($"Error with ex test:{ex.Message}, Exception: {ex}");
+            _logger.LogWarning($"{message}");
             return Ok();
         }
     }

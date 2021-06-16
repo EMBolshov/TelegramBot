@@ -6,16 +6,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="HaemmerElectronics.SeppPenner.SerilogSinkForPostgreSQL" Version="3.3.4" />
-      <PackageReference Include="Serilog" Version="2.10.0" />
-      <PackageReference Include="Serilog.Extensions.Logging" Version="3.0.1" />
-      <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
-      <PackageReference Include="Telegram.Bot" Version="15.7.1" />
+        <PackageReference Include="Telegram.Bot" Version="15.7.1" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\TelegramBot.Infrastructure123\TelegramBot.Infrastructure123.csproj" />
-      <ProjectReference Include="..\TelegramBot.Infrastructure\TelegramBot.Infrastructure.csproj" />
+        <ProjectReference Include="..\TelegramBot.Infrastructure123\TelegramBot.Infrastructure123.csproj" />
+        <ProjectReference Include="..\TelegramBot.Infrastructure\TelegramBot.Infrastructure.csproj" />
+        <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.*" />
+        <PackageReference Include="NLog" Version="4.7.*" />
     </ItemGroup>
-
+    
 </Project>

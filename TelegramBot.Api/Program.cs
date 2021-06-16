@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
 
 namespace TelegramBot.Api
 {
@@ -12,6 +14,12 @@ namespace TelegramBot.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
+                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); })
+                .ConfigureLogging(l =>
+                {
+                    l.ClearProviders();
+                    l.SetMinimumLevel(LogLevel.Trace);
+                })
+                .UseNLog();
     }
 }
