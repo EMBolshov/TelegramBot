@@ -10,7 +10,7 @@ namespace TelegramBot.Api.Models.Commands
     {
         private readonly IBotDbRepository _repository;
         
-        public string Name => "savechord";
+        public string Name => "/savechord";
 
         public SaveChordCommand(IBotDbRepository repository)
         {

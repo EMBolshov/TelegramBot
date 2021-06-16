@@ -26,7 +26,8 @@ namespace TelegramBot.Api.Models
             Client = new TelegramBotClient(options.Value.AccessToken);
 
             var hook = $"{options.Value.AppBaseUrl}/api/message/update";
-            
+
+            Client.DeleteWebhookAsync();
             Client.SetWebhookAsync(hook);
             _logger.LogWarning($"Webhook: {hook}");
         }

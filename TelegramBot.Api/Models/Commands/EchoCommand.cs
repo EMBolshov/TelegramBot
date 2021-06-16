@@ -20,7 +20,7 @@ namespace TelegramBot.Api.Models.Commands
             _logger = logger;
         }
 
-        public string Name => "echo";
+        public string Name => "/echo";
         
         public async Task Execute(Message message, TelegramBotClient client)
         {
