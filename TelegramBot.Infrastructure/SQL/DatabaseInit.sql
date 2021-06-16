@@ -1,6 +1,6 @@
 CREATE TABLE public."Chords"
 (
-    "Id" SERIAL,
+    "Id" SERIAL PRIMARY KEY,
     "Name" character varying (8) NOT NULL,
     "Fingering" character varying (255) NOT NULL 
 )
@@ -13,7 +13,7 @@ ALTER TABLE public."Chords"
 
 CREATE TABLE public."Songs"
 (
-    "Id" SERIAL,
+    "Id" SERIAL PRIMARY KEY,
     "Name" character varying (127) NOT NULL,
     "Beat" character varying (127),
     "Chords" character varying (127) NOT NULL,

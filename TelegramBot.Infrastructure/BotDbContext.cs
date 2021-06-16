@@ -24,5 +24,16 @@ namespace TelegramBot.Infrastructure
         {
             optionsBuilder.UseNpgsql(_connectionString);
         }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Chord>()
+                .HasKey(c => c.Id)
+                .HasName("Id");
+
+            modelBuilder.Entity<Song>()
+                .HasKey(s => s.Id)
+                .HasName("Id");
+        }
     }
 }
