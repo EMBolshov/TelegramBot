@@ -22,7 +22,7 @@ namespace TelegramBot.Infrastructure
         {
             await using (var context = new BotDbContext(_connectionString))
             {
-                return await context.Chords.SingleAsync(c => c.Name == name);
+                return await context.Chords.SingleOrDefaultAsync(c => c.Name == name);
             }
         }
 
