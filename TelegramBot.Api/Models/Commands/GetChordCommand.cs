@@ -19,10 +19,13 @@ namespace TelegramBot.Api.Models.Commands
         public async Task Execute(Message message, TelegramBotClient client)
         {
             var chord = await _repository.GetChord(message.ParseName());
-            
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
-            await client.SendTextMessageAsync(chatId, $"Chord {chord.Name}, Fingering: \n {chord}", replyToMessageId: messageId);
+
+            if (chord == null)
+                await client.SendTextMessageAsync(chatId, "Chord not found", replyToMessageId: messageId);
+            else
+                await client.SendTextMessageAsync(chatId, $"Chord {chord.Name}, Fingering: \n {chord}", replyToMessageId: messageId);
         }
     }
 }

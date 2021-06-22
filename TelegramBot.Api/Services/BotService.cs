@@ -27,13 +27,15 @@ namespace TelegramBot.Api.Services
         {
             try
             {
-                var cmd = _commands.Single(c => message.Text.StartsWith(c.Name));
+                var cmd = _commands.SingleOrDefault(c => message.Text.StartsWith(c.Name)) ??
+                          new SendCommandNotFoundMessageCommand();
+                
                 return cmd.Execute(message, _client);
             }
+            //Suppress exception to prevent retry pending update 
             catch (Exception ex)
             {
                 _logger.LogError($"Error: {ex}");
-                //Suppress exception to prevent retry pending update 
                 return Task.CompletedTask;
             }
         }
