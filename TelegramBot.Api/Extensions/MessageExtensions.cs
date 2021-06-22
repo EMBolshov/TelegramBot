@@ -15,6 +15,9 @@ namespace TelegramBot.Api.Extensions
         {
             //TODO: Do something with fingering format
             var parts = message.Text.Split(' ');
+            
+            if (parts.Length != 3)
+                throw new ArgumentException($"Command {parts[0]} contain wrong number of arguments");
 
             return new Chord
             {

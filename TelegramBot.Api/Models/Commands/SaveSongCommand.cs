@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using TelegramBot.Api.Extensions;
@@ -19,7 +20,18 @@ namespace TelegramBot.Api.Models.Commands
 
         public async Task Execute(Message message, TelegramBotClient client)
         {
-            _repository.AddSong(message.ParseSong());
+            var chatId = message.Chat.Id;
+            var messageId = message.MessageId;
+            
+            try
+            {
+                await _repository.AddSong(message.ParseSong());
+            }
+            catch (ArgumentException)
+            {
+                await client.SendTextMessageAsync(chatId, "Command has wrong number of arguments",
+                    replyToMessageId: messageId);
+            }
         }
     }
 }
