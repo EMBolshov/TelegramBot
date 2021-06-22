@@ -33,7 +33,8 @@ namespace TelegramBot.Api.Services
             catch (Exception ex)
             {
                 _logger.LogError($"Error: {ex}");
-                throw;
+                //Suppress exception to prevent retry pending update 
+                return Task.CompletedTask;
             }
         }
     }
