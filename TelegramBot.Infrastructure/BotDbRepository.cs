@@ -1,4 +1,6 @@
-﻿using TelegramBot.Domain;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using TelegramBot.Domain;
 
 namespace TelegramBot.Infrastructure
 {
@@ -11,22 +13,30 @@ namespace TelegramBot.Infrastructure
             _connectionString = connectionString;
         }
 
-        public void AddChord(Chord chord)
+        public async Task AddChord(Chord chord)
         {
-            AddEntity(chord);
-        }
-        
-        public void AddSong(Song song)
-        {
-            AddEntity(song);
+            await AddEntity(chord);
         }
 
-        private static void AddEntity(IEntity entity)
+        public async Task<Chord> GetChord(string name)
         {
-            using (var context = new BotDbContext(_connectionString))
+            await using (var context = new BotDbContext(_connectionString))
             {
-                context.Add(entity);
-                context.SaveChanges();
+                return await context.Chords.SingleAsync(c => c.Name == name);
+            }
+        }
+
+        public async Task AddSong(Song song)
+        {
+            await AddEntity(song);
+        }
+
+        private static async Task AddEntity(IEntity entity)
+        {
+            await using (var context = new BotDbContext(_connectionString))
+            {
+                await context.AddAsync(entity);
+                await context.SaveChangesAsync();
             }
         }
     }

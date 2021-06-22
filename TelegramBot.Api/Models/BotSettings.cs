@@ -20,7 +20,8 @@ namespace TelegramBot.Api.Models
             {
                 new EchoCommand(),
                 new SaveChordCommand(repository),
-                new SaveSongCommand(repository)
+                new SaveSongCommand(repository),
+                new GetChordCommand(repository)
             };
 
             Client = new TelegramBotClient(options.Value.AccessToken);

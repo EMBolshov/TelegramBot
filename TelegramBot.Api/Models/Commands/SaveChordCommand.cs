@@ -19,7 +19,7 @@ namespace TelegramBot.Api.Models.Commands
 
         public async Task Execute(Message message, TelegramBotClient client)
         {
-            _repository.AddChord(message.ParseChord());
+            await _repository.AddChord(message.ParseChord());
         }
     }
 }
