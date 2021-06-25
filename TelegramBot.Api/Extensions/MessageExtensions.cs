@@ -35,19 +35,20 @@ namespace TelegramBot.Api.Extensions
         {
             //TODO: Format differs from other commands - split by | instead of whitespace 
 
-            //Example: savesong|Дайте Танк (!) - Бардак|Восьмерка|Em, D#, C, Bm, F#, B, Am, G, D|0|Число фонарей умножая на два ...
+            //Example: savesong|Дайте Танк (!)|Бардак|Восьмерка|Em, D#, C, Bm, F#, B, Am, G, D|0|Число фонарей умножая на два ...
             
             var parts = message.Text.Split('|');
-            if (parts.Length != 6)
+            if (parts.Length != 7)
                 throw new ArgumentException($"Command {parts[0]} contain wrong number of arguments");
 
             return new Song
             {
                 Name = parts[1],
-                Beat = parts[2],
-                Chords = parts[3],
-                Capo = parts[4],
-                Text = parts[5]
+                Author = parts[2],
+                Beat = parts[3],
+                Chords = parts[4],
+                Capo = parts[5],
+                Text = parts[6]
             };
         }
 
@@ -63,6 +64,20 @@ namespace TelegramBot.Api.Extensions
                 throw new ArgumentException($"Command {parts[0]} contain wrong number of arguments");
             
             return parts[1];
+        }
+        
+        /// <summary>
+        /// Format: /getsongN author name
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static (string name, string author) ParseSongAuthorAndName(this Message message)
+        {
+            var parts = message.Text.Split(' ');
+            if (parts.Length != 3)
+                throw new ArgumentException($"Command {parts[0]} contain wrong number of arguments");
+            
+            return (parts[1], parts[2]);
         }
     }
 }

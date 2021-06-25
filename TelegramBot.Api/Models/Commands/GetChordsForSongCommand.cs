@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -8,12 +10,12 @@ using TelegramBot.Infrastructure;
 
 namespace TelegramBot.Api.Models.Commands
 {
-    public class GetChordCommand : ICommand
+    public class GetChordsForSongCommand : ICommand
     {
+        public string Name => "/getchordsforsong";
         private readonly IBotDbRepository _repository;
-        public string Name => "/getchord";
 
-        public GetChordCommand(IBotDbRepository repository)
+        public GetChordsForSongCommand(IBotDbRepository repository)
         {
             _repository = repository;
         }
@@ -22,21 +24,22 @@ namespace TelegramBot.Api.Models.Commands
         {
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
-            Chord? chord = null;
+            var chords = new HashSet<Chord>();
             
             try
             {
-                chord = await _repository.GetChord(message.ParseName());
+                var (author, name) = message.ParseSongAuthorAndName();
+                chords = (await _repository.GetChordsForSong(author, name)).ToHashSet();
             }
             catch (ArgumentException)
             {
                 await client.SendTextMessageAsync(chatId, "Command has wrong number of arguments", replyToMessageId: messageId);
             }
             
-            if (chord == null)
-                await client.SendTextMessageAsync(chatId, "Chord was not found", replyToMessageId: messageId);
+            if (chords.Any())
+                await client.SendTextMessageAsync(chatId, "Chords was not found for requested song", replyToMessageId: messageId);
             else
-                await client.SendTextMessageAsync(chatId, $"Chord {chord.Name}, Fingering: \n {chord}", replyToMessageId: messageId);
+                await client.SendTextMessageAsync(chatId, $"Chords: {string.Join(", ", chords)}", replyToMessageId: messageId);
         }
     }
 }

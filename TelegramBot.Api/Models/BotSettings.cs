@@ -11,17 +11,18 @@ namespace TelegramBot.Api.Models
     {
         public readonly TelegramBotClient Client;
         public readonly IReadOnlyCollection<ICommand> Commands;
-        private readonly ILogger<BotSettings> _logger;
-        
+
         public BotSettings(IOptions<Options> options, IBotDbRepository repository, ILogger<BotSettings> logger)
         {
-            _logger = logger;
             Commands = new List<ICommand>
             {
                 new EchoCommand(),
                 new SaveChordCommand(repository),
+                new GetChordCommand(repository),
+                new GetChordsCommand(repository),
                 new SaveSongCommand(repository),
-                new GetChordCommand(repository)
+                new GetSongCommand(repository),
+                new GetChordsForSongCommand(repository)
             };
 
             Client = new TelegramBotClient(options.Value.AccessToken);
@@ -30,7 +31,7 @@ namespace TelegramBot.Api.Models
 
             Client.DeleteWebhookAsync();
             Client.SetWebhookAsync(hook);
-            _logger.LogWarning($"Webhook: {hook}");
+            logger.LogWarning($"Webhook: {hook}");
         }
 
         public TelegramBotClient InitBot()

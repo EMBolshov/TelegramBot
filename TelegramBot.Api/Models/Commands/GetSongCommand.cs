@@ -8,12 +8,12 @@ using TelegramBot.Infrastructure;
 
 namespace TelegramBot.Api.Models.Commands
 {
-    public class GetChordCommand : ICommand
+    public class GetSongCommand : ICommand
     {
+        public string Name => "/getsong";
         private readonly IBotDbRepository _repository;
-        public string Name => "/getchord";
 
-        public GetChordCommand(IBotDbRepository repository)
+        public GetSongCommand(IBotDbRepository repository)
         {
             _repository = repository;
         }
@@ -22,21 +22,22 @@ namespace TelegramBot.Api.Models.Commands
         {
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
-            Chord? chord = null;
+            Song? song = null;
             
             try
             {
-                chord = await _repository.GetChord(message.ParseName());
+                var (author, name) = message.ParseSongAuthorAndName();
+                song = await _repository.GetSong(author, name);
             }
             catch (ArgumentException)
             {
                 await client.SendTextMessageAsync(chatId, "Command has wrong number of arguments", replyToMessageId: messageId);
             }
             
-            if (chord == null)
-                await client.SendTextMessageAsync(chatId, "Chord was not found", replyToMessageId: messageId);
+            if (song == null)
+                await client.SendTextMessageAsync(chatId, "Song was not found", replyToMessageId: messageId);
             else
-                await client.SendTextMessageAsync(chatId, $"Chord {chord.Name}, Fingering: \n {chord}", replyToMessageId: messageId);
+                await client.SendTextMessageAsync(chatId, $"Song {song}", replyToMessageId: messageId);
         }
     }
 }

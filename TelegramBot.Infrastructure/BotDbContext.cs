@@ -25,6 +25,8 @@ namespace TelegramBot.Infrastructure
             optionsBuilder.UseNpgsql(_connectionString);
         }
         
+        //TODO: Song.Author + Song.Name -> Unique
+        //TODO: Chord.Name -> Unique
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Chord>()
