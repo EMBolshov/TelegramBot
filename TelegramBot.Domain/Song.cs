@@ -7,7 +7,7 @@
         //TODO: Index to Name
         //TODO: Name + Author unique constraint
         public string Name { get; init; }
-        public string Author { get; set; }
+        public string Author { get; init; }
         public string Beat { get; init; }
         
         //TODO: IEnumerable<Chords>
@@ -17,7 +17,7 @@
 
         public override string ToString()
         {
-            return $"Song {Name},\nCapo {Capo},\nBeat {Beat},\nChords {Chords},\n\nText: \n {Text}";
+            return $"Song {Name} by {Author},\nCapo {Capo},\nBeat {Beat},\nChords {Chords},\n\nText: \n {Text}";
         }
     }
 }

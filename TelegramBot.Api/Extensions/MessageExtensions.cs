@@ -7,7 +7,7 @@ namespace TelegramBot.Api.Extensions
     public static class MessageExtensions
     {
         /// <summary>
-        /// /savechord Am e:-||-O-|---|---|&h:-||---|---|-O-|&g:-||---|---|-O-|&d:-||---|---|-O-|&A:-||-O-|---|---|&E:-||-O-|---|---|
+        /// /savechord Am 0 e:-||-O-|---|---|&h:-||---|---|-O-|&g:-||---|---|-O-|&d:-||---|---|-O-|&A:-||-O-|---|---|&E:-||-O-|---|---|
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
@@ -16,13 +16,14 @@ namespace TelegramBot.Api.Extensions
             //TODO: Do something with fingering format
             var parts = message.Text.Split(' ');
             
-            if (parts.Length != 3)
+            if (parts.Length != 4)
                 throw new ArgumentException($"Command {parts[0]} contain wrong number of arguments");
 
             return new Chord
             {
                 Name = parts[1],
-                Fingering = parts[2]
+                StartFret = parts[2],
+                Fingering = parts[3]
             };
         }
         
