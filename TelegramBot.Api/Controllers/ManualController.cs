@@ -25,7 +25,7 @@ namespace TelegramBot.Api.Controllers
         {
             var msg = new Message
             {
-                Text = "/getchordsforsong|Дайте Танк (!)|Летние вечера",
+                Text = "/getchords Dm, F, G,  A#, Am",
                 Chat = new Chat
                 {
                     Id = 0

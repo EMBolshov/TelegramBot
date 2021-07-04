@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
@@ -21,9 +22,9 @@ namespace TelegramBot.Api.Models.Commands
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
 
-            var chordNames = message.Text.Split(' ').Skip(1).ToHashSet();
+            var chordNames = message.Text.Split(new [] {' ', ','}, StringSplitOptions.RemoveEmptyEntries).Skip(1).ToHashSet();
             
-            var chords = (await _repository.GetChordsAsync(chordNames)).ToHashSet();
+            var chords = (await _repository.GetChordsAsync(chordNames)).ToList();
 
             if (!chords.Any())
             {
