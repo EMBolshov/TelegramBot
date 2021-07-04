@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using TelegramBot.Api.Extensions;
 using TelegramBot.Api.Models;
 using TelegramBot.Api.Models.Commands;
 
@@ -35,7 +36,7 @@ namespace TelegramBot.Api.Services
             //Suppress exception to prevent retry pending update 
             catch (Exception ex)
             {
-                _logger.LogError($"Error: {ex}");
+                _logger.LogError($"Error: {ex.GetFullMessage()}");
                 return Task.CompletedTask;
             }
         }

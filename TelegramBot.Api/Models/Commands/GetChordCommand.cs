@@ -32,6 +32,11 @@ namespace TelegramBot.Api.Models.Commands
             {
                 await client.SendTextMessageAsync(chatId, "Command has wrong number of arguments", replyToMessageId: messageId);
             }
+            catch (Exception ex)
+            {
+                await client.SendTextMessageAsync(chatId, $"Exception occured - {ex.GetFullMessage()}",
+                    replyToMessageId: messageId);
+            }
             
             if (chord == null)
                 await client.SendTextMessageAsync(chatId, "Chord was not found", replyToMessageId: messageId);

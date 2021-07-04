@@ -25,12 +25,22 @@ namespace TelegramBot.Api.Models.Commands
             
             try
             {
-                await _repository.AddSong(message.ParseSong());
+                var song = message.ParseSong();
+                await _repository.AddSong(song);
+                await client.SendTextMessageAsync(chatId, $"Song {song.Name} by {song.Author} saved", 
+                    replyToMessageId: messageId);
             }
             catch (ArgumentException)
             {
                 await client.SendTextMessageAsync(chatId, "Command has wrong number of arguments",
                     replyToMessageId: messageId);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                await client.SendTextMessageAsync(chatId, $"Exception occured - {ex.GetFullMessage()}",
+                    replyToMessageId: messageId);
+                throw;
             }
         }
     }
