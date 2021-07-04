@@ -29,7 +29,7 @@ namespace TelegramBot.Api.Services
             try
             {
                 var cmd = _commands.SingleOrDefault(c => message.Text.StartsWith(c.Name)) ??
-                          new SendCommandNotFoundMessageCommand();
+                          new SendReplyMessageCommand($"Command {message.Text} not found");
                 
                 await cmd.Execute(message, _client);
             }
@@ -37,6 +37,9 @@ namespace TelegramBot.Api.Services
             catch (Exception ex)
             {
                 _logger.LogError($"Error: {ex.GetFullMessage()}");
+                
+                var sendErrorMessageCmd = new SendReplyMessageCommand($"Exception occured - {ex.GetFullMessage()}");
+                await sendErrorMessageCmd.Execute(message, _client);
             }
         }
     }
