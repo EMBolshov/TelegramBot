@@ -27,7 +27,7 @@ namespace TelegramBot.Api.Extensions
             return new Chord
             {
                 Name = parts[1],
-                StartFret = parts[2],
+                StartFret = int.Parse(parts[2]),
                 Fingering = fingering
             };
 
