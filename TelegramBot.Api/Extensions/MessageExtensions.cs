@@ -81,13 +81,13 @@ namespace TelegramBot.Api.Extensions
         }
         
         /// <summary>
-        /// Format: /getsongN author name
+        /// Format: /getsongN|author|name
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
         public static (string name, string author) ParseSongAuthorAndName(this Message message)
         {
-            var parts = message.Text.Split(' ');
+            var parts = message.Text.Split('|');
             if (parts.Length != 3)
                 throw new ArgumentException($"Command {parts[0]} contain wrong number of arguments");
             
