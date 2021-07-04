@@ -53,7 +53,7 @@ namespace TelegramBot.Infrastructure
         {
             await using (var context = new BotDbContext(_connectionString))
             {
-                var song = await context.Songs.SingleAsync(s => s.Name == name);
+                var song = await context.Songs.SingleAsync(s => s.Author == author && s.Name == name);
                 var chords = song.Chords;
                 return context.Chords.Where(c => chords.Contains(c.Name));
             }
