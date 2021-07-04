@@ -18,14 +18,14 @@ namespace TelegramBot.Api.Models.Commands
             _repository = repository;
         }
 
-        public async Task Execute(Message message, TelegramBotClient client)
+        public async Task ExecuteAsync(Message message, TelegramBotClient client)
         {
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
 
             var chordNames = message.Text.Split(' ').Skip(1);
             
-            HashSet<Chord> chords = (await _repository.GetChords(chordNames)).ToHashSet();
+            HashSet<Chord> chords = (await _repository.GetChordsAsync(chordNames)).ToHashSet();
 
             if (chords.Any())
                 await client.SendTextMessageAsync(chatId, "Chords was not found", replyToMessageId: messageId);

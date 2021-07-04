@@ -7,6 +7,6 @@ namespace TelegramBot.Api.Models.Commands
     public interface ICommand
     {
         public string Name { get; }
-        Task Execute(Message message, TelegramBotClient client);
+        Task ExecuteAsync(Message message, TelegramBotClient client);
     }
 }

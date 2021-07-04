@@ -8,7 +8,7 @@ namespace TelegramBot.Api.Models.Commands
     {
         public string Name => "/echo";
         
-        public async Task Execute(Message message, TelegramBotClient client)
+        public async Task ExecuteAsync(Message message, TelegramBotClient client)
         {
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;

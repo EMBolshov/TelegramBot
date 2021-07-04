@@ -15,12 +15,12 @@ namespace TelegramBot.Infrastructure
             _connectionString = connectionString;
         }
 
-        public async Task AddChord(Chord chord)
+        public async Task AddChordAsync(Chord chord)
         {
-            await AddEntity(chord);
+            await AddEntityAsync(chord);
         }
 
-        public async Task<Chord> GetChord(string name)
+        public async Task<Chord> GetChordAsync(string name)
         {
             await using (var context = new BotDbContext(_connectionString))
             {
@@ -28,7 +28,7 @@ namespace TelegramBot.Infrastructure
             }
         }
 
-        public async Task<IEnumerable<Chord>> GetChords(IEnumerable<string> names)
+        public async Task<IEnumerable<Chord>> GetChordsAsync(IEnumerable<string> names)
         {
             await using (var context = new BotDbContext(_connectionString))
             {
@@ -36,12 +36,12 @@ namespace TelegramBot.Infrastructure
             }
         }
 
-        public async Task AddSong(Song song)
+        public async Task AddSongAsync(Song song)
         {
-            await AddEntity(song);
+            await AddEntityAsync(song);
         }
 
-        public async Task<Song> GetSong(string author, string name)
+        public async Task<Song> GetSongAsync(string author, string name)
         {
             await using (var context = new BotDbContext(_connectionString))
             {
@@ -49,17 +49,17 @@ namespace TelegramBot.Infrastructure
             }
         }
 
-        public async Task<IEnumerable<Chord>> GetChordsForSong(string author, string name)
+        public async Task<IEnumerable<Chord>> GetChordsForSongAsync(string author, string name)
         {
             await using (var context = new BotDbContext(_connectionString))
             {
-                var song = await context.Songs.SingleAsync(s => s.Author == author && s.Name == name);
+                var song = context.Songs.Single(s => s.Author == author && s.Name == name);
                 var chords = song.Chords;
                 return context.Chords.Where(c => chords.Contains(c.Name));
             }
         }
 
-        private static async Task AddEntity(IEntity entity)
+        private static async Task AddEntityAsync(IEntity entity)
         {
             await using (var context = new BotDbContext(_connectionString))
             {

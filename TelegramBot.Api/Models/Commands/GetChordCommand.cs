@@ -18,7 +18,7 @@ namespace TelegramBot.Api.Models.Commands
             _repository = repository;
         }
         
-        public async Task Execute(Message message, TelegramBotClient client)
+        public async Task ExecuteAsync(Message message, TelegramBotClient client)
         {
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
@@ -26,7 +26,7 @@ namespace TelegramBot.Api.Models.Commands
             
             try
             {
-                chord = await _repository.GetChord(message.ParseName());
+                chord = await _repository.GetChordAsync(message.ParseName());
             }
             catch (ArgumentException)
             {

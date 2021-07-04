@@ -32,7 +32,7 @@ namespace TelegramBot.Api.Services
                 var cmd = _commands.SingleOrDefault(c => cmdName == c.Name) ??
                           new SendReplyMessageCommand($"Command {message.Text} was not found");
                 
-                await cmd.Execute(message, _client);
+                await cmd.ExecuteAsync(message, _client);
             }
             //Suppress exception to prevent retry pending update 
             catch (Exception ex)
@@ -40,7 +40,7 @@ namespace TelegramBot.Api.Services
                 _logger.LogError($"Error: {ex.GetFullMessage()}");
                 
                 var sendErrorMessageCmd = new SendReplyMessageCommand($"Exception occured - {ex.GetFullMessage()}");
-                await sendErrorMessageCmd.Execute(message, _client);
+                await sendErrorMessageCmd.ExecuteAsync(message, _client);
             }
         }
     }
