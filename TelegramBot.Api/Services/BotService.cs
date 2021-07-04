@@ -24,20 +24,19 @@ namespace TelegramBot.Api.Services
             _commands = settings.Commands;
         }
 
-        public Task ExecuteCommand(Message message)
+        public async Task ExecuteCommand(Message message)
         {
             try
             {
                 var cmd = _commands.SingleOrDefault(c => message.Text.StartsWith(c.Name)) ??
                           new SendCommandNotFoundMessageCommand();
                 
-                return cmd.Execute(message, _client);
+                await cmd.Execute(message, _client);
             }
             //Suppress exception to prevent retry pending update 
             catch (Exception ex)
             {
                 _logger.LogError($"Error: {ex.GetFullMessage()}");
-                return Task.CompletedTask;
             }
         }
     }
