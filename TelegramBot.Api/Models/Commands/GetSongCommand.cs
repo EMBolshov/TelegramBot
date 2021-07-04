@@ -42,7 +42,7 @@ namespace TelegramBot.Api.Models.Commands
             if (song == null)
                 await client.SendTextMessageAsync(chatId, "Song was not found", replyToMessageId: messageId);
             else
-                await client.SendTextMessageAsync(chatId, $"Song {song}", replyToMessageId: messageId);
+                await client.SendTextMessageAsync(chatId, $"{song}", replyToMessageId: messageId);
         }
     }
 }

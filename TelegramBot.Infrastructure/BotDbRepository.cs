@@ -32,7 +32,7 @@ namespace TelegramBot.Infrastructure
         {
             await using (var context = new BotDbContext(_connectionString))
             {
-                return context.Chords.Where(c => names.Contains(c.Name)).ToList();
+                return await context.Chords.Where(c => names.Contains(c.Name)).ToListAsync();
             }
         }
 
@@ -53,9 +53,10 @@ namespace TelegramBot.Infrastructure
         {
             await using (var context = new BotDbContext(_connectionString))
             {
-                var song = context.Songs.Single(s => s.Author == author && s.Name == name);
+                var song = await context.Songs.SingleAsync(s => s.Author == author && s.Name == name);
                 var chords = song.Chords;
-                return context.Chords.Where(c => chords.Contains(c.Name));
+                
+                return await context.Chords.Where(c => chords.Contains(c.Name)).ToListAsync();
             }
         }
 

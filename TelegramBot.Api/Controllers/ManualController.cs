@@ -21,11 +21,16 @@ namespace TelegramBot.Api.Controllers
 
         [HttpPost]
         [Route("test")]
-        public async Task<OkResult> Update([FromBody] Update update)
+        public async Task<OkResult> Update()
         {
             var msg = new Message
             {
-                Text = "savechord Am e:O||---|---|---|h:-||-O-|---|---|g:-||---|-O-|---|d:-||---|-O-|---|A:O||---|---|---|E:O||---|---|---|"
+                Text = "/getchordsforsong|Дайте Танк (!)|Летние вечера",
+                Chat = new Chat
+                {
+                    Id = 0
+                },
+                MessageId = 0
             };
 
             await _bot.ExecuteCommand(msg);

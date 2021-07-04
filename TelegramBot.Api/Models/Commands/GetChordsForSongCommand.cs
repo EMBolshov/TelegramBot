@@ -29,7 +29,8 @@ namespace TelegramBot.Api.Models.Commands
             try
             {
                 var (author, name) = message.ParseSongAuthorAndName();
-                chords = (await _repository.GetChordsForSongAsync(author, name)).ToHashSet();
+                var foundChords = await _repository.GetChordsForSongAsync(author, name);
+                chords = foundChords.ToHashSet();
             }
             catch (ArgumentException)
             {
@@ -41,7 +42,7 @@ namespace TelegramBot.Api.Models.Commands
                     replyToMessageId: messageId);
             }
             
-            if (chords.Any())
+            if (!chords.Any())
                 await client.SendTextMessageAsync(chatId, "Chords was not found for requested song", replyToMessageId: messageId);
             else
                 await client.SendTextMessageAsync(chatId, $"Chords: {string.Join(", ", chords)}", replyToMessageId: messageId);

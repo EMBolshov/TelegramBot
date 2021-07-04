@@ -9,7 +9,7 @@
 
         public override string ToString()
         {
-            return $"Start fret: {StartFret}, Fingering:\n{Fingering.Replace('&', '\n')}";
+            return $"Chord {Name}. Start fret: {StartFret}, Fingering:\n{Fingering.Replace('&', '\n')}";
         }
     }
 }

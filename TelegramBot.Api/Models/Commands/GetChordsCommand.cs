@@ -23,18 +23,20 @@ namespace TelegramBot.Api.Models.Commands
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
 
-            var chordNames = message.Text.Split(' ').Skip(1);
+            var chordNames = message.Text.Split(' ').Skip(1).ToHashSet();
             
-            HashSet<Chord> chords = (await _repository.GetChordsAsync(chordNames)).ToHashSet();
+            var chords = await _repository.GetChordsAsync(chordNames);
 
-            if (chords.Any())
-                await client.SendTextMessageAsync(chatId, "Chords was not found", replyToMessageId: messageId);
+            var foundChords = chords.ToHashSet();
+            if (!foundChords.Any())
+            {
+                await client.SendTextMessageAsync(chatId, $"Chords {string.Join(", ", chordNames)} was not found", replyToMessageId: messageId);
+            }
             else
             {
-                foreach (var chord in chords)
+                foreach (var chord in foundChords)
                 {
-                    await client.SendTextMessageAsync(chatId, $"Chord {chord.Name}, Fingering: \n {chords}",
-                        replyToMessageId: messageId);
+                    await client.SendTextMessageAsync(chatId, $"{chord}", replyToMessageId: messageId);
                 }
             }
         }

@@ -17,7 +17,7 @@ namespace TelegramBot.Api.Controllers
 
         [HttpPost]
         [Route("api/message/update")]
-        public async Task<OkResult> Update([FromBody] Update update)
+        public async Task<OkResult> UpdateAsync([FromBody] Update update)
         {
             await _bot.ExecuteCommand(update.Message);
             return Ok();
