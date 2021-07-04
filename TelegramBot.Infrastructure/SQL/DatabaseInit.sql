@@ -1,7 +1,8 @@
 CREATE TABLE public."Chords"
 (
     "Id" SERIAL PRIMARY KEY,
-    "Name" character varying (8) NOT NULL,
+    "Name" character varying (8) NOT NULL UNIQUE,
+    "StartFret" integer NOT NULL DEFAULT 0,
     "Fingering" character varying (255) NOT NULL 
 )
 WITH (
@@ -15,10 +16,12 @@ CREATE TABLE public."Songs"
 (
     "Id" SERIAL PRIMARY KEY,
     "Name" character varying (127) NOT NULL,
+    "Author" character varying (127) NOT NULL,    
     "Beat" character varying (127),
     "Chords" character varying (127) NOT NULL,
     "Capo" character varying (8),
-    "Text" text    
+    "Text" text,
+    UNIQUE ("Name", "Author") 
 )
 WITH (
     OIDS = FALSE

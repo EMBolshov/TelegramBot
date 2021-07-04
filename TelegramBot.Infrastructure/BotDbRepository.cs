@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -33,8 +32,6 @@ namespace TelegramBot.Infrastructure
         {
             await using (var context = new BotDbContext(_connectionString))
             {
-                //TODO: async?
-                //TODO: Check how EF generate sql 
                 return context.Chords.Where(c => names.Contains(c.Name)).ToList();
             }
         }
@@ -57,8 +54,7 @@ namespace TelegramBot.Infrastructure
             await using (var context = new BotDbContext(_connectionString))
             {
                 var song = await context.Songs.SingleAsync(s => s.Name == name);
-                var chords = song.Chords.Split(',', StringSplitOptions.RemoveEmptyEntries).ToList();
-                //TODO: async?
+                var chords = song.Chords;
                 return context.Chords.Where(c => chords.Contains(c.Name));
             }
         }

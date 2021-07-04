@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Telegram.Bot.Types;
 using TelegramBot.Domain;
 
@@ -7,35 +8,47 @@ namespace TelegramBot.Api.Extensions
     public static class MessageExtensions
     {
         /// <summary>
-        /// /savechord Am 0 e:-||-O-|---|---|&h:-||---|---|-O-|&g:-||---|---|-O-|&d:-||---|---|-O-|&A:-||-O-|---|---|&E:-||-O-|---|---|
+        /// /savechord Am 0 e:O||---|---|---|---|&h:-||-O-|---|---|---|&g:-||---|-O-|---|---|&d:-||---|-O-|---|---|&A:O||---|---|---|---|&E:O||---|---|---|---|
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
         public static Chord ParseChord(this Message message)
         {
-            //TODO: Do something with fingering format
             var parts = message.Text.Split(' ');
             
             if (parts.Length != 4)
                 throw new ArgumentException($"Command {parts[0]} contain wrong number of arguments");
 
+            var fingering = parts[3];
+
+            if (!ValidateFingering(fingering))
+                throw new ArgumentException($"Can not save chord {parts[1]} - fingering is in wrong format");
+            
             return new Chord
             {
                 Name = parts[1],
                 StartFret = parts[2],
-                Fingering = parts[3]
+                Fingering = fingering
             };
+
+            bool ValidateFingering(string fingering)
+            {
+                var parts = fingering.Split('&', StringSplitOptions.RemoveEmptyEntries);
+                
+                if (parts.Length != 6) return false;
+                if (parts.Any(p => p.Length != 21)) return false;
+                
+                return true;
+            }
         }
         
         /// <summary>
-        /// Format: /savesong|Name|Beat|Chords|Capo|Text
+        /// Format: /savesong|Author|Name|Beat|Chords|Capo|Text
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
         public static Song ParseSong(this Message message)
         {
-            //TODO: Format differs from other commands - split by | instead of whitespace 
-
             //Example: savesong|Дайте Танк (!)|Бардак|Восьмерка|Em, D#, C, Bm, F#, B, Am, G, D|0|Число фонарей умножая на два ...
             
             var parts = message.Text.Split('|');
@@ -44,10 +57,10 @@ namespace TelegramBot.Api.Extensions
 
             return new Song
             {
-                Name = parts[1],
-                Author = parts[2],
+                Author = parts[1],
+                Name = parts[2],
                 Beat = parts[3],
-                Chords = parts[4],
+                Chords = parts[4].Split(", ", StringSplitOptions.RemoveEmptyEntries),
                 Capo = parts[5],
                 Text = parts[6]
             };

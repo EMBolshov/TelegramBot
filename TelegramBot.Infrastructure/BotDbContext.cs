@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
 using TelegramBot.Domain;
 
 namespace TelegramBot.Infrastructure
@@ -24,18 +25,38 @@ namespace TelegramBot.Infrastructure
         {
             optionsBuilder.UseNpgsql(_connectionString);
         }
-        
-        //TODO: Song.Author + Song.Name -> Unique
-        //TODO: Chord.Name -> Unique
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Chord>()
-                .HasKey(c => c.Id)
-                .HasName("Id");
+            SetupChords();
 
-            modelBuilder.Entity<Song>()
-                .HasKey(s => s.Id)
-                .HasName("Id");
+            SetupSong();
+
+            void SetupChords()
+            {
+                modelBuilder.Entity<Chord>()
+                    .HasKey(c => c.Id)
+                    .HasName("Id");
+
+                modelBuilder.Entity<Chord>().HasIndex(c => c.Name).IsUnique();
+            }
+
+            void SetupSong()
+            {
+                modelBuilder.Entity<Song>()
+                    .HasKey(s => s.Id)
+                    .HasName("Id");
+
+                modelBuilder.Entity<Song>()
+                    .Property(e => e.Chords)
+                    .HasConversion(
+                        v => string.Join(',', v),
+                        v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
+
+                modelBuilder.Entity<Song>()
+                    .HasIndex(s => new {s.Author, s.Name})
+                    .IsUnique();
+            }
         }
     }
 }
