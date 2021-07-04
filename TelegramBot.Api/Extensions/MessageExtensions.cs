@@ -9,7 +9,7 @@ namespace TelegramBot.Api.Extensions
     {
         public static string ParseCommand(this Message message)
         {
-            var parts = message.Text.Split(' ', '|', StringSplitOptions.RemoveEmptyEntries);
+            var parts = message.Text.Split(new [] {' ', '|'}, StringSplitOptions.RemoveEmptyEntries);
             return parts[0];
         }
         

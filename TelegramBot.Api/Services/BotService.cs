@@ -30,7 +30,7 @@ namespace TelegramBot.Api.Services
             {
                 var cmdName = message.ParseCommand();
                 var cmd = _commands.SingleOrDefault(c => cmdName == c.Name) ??
-                          new SendReplyMessageCommand($"Command {message.Text} not found");
+                          new SendReplyMessageCommand($"Command {message.Text} was not found");
                 
                 await cmd.Execute(message, _client);
             }
