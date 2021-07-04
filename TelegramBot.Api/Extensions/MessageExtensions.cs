@@ -7,6 +7,12 @@ namespace TelegramBot.Api.Extensions
 {
     public static class MessageExtensions
     {
+        public static string ParseCommand(this Message message)
+        {
+            var parts = message.Text.Split(' ', '|', StringSplitOptions.RemoveEmptyEntries);
+            return parts[0];
+        }
+        
         /// <summary>
         /// /savechord Am 0 e:O||---|---|---|---|&h:-||-O-|---|---|---|&g:-||---|-O-|---|---|&d:-||---|-O-|---|---|&A:O||---|---|---|---|&E:O||---|---|---|---|
         /// </summary>
