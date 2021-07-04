@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using TelegramBot.Domain;
 using TelegramBot.Infrastructure;
 
 namespace TelegramBot.Api.Models.Commands
@@ -25,16 +23,15 @@ namespace TelegramBot.Api.Models.Commands
 
             var chordNames = message.Text.Split(' ').Skip(1).ToHashSet();
             
-            var chords = await _repository.GetChordsAsync(chordNames);
+            var chords = (await _repository.GetChordsAsync(chordNames)).ToHashSet();
 
-            var foundChords = chords.ToHashSet();
-            if (!foundChords.Any())
+            if (!chords.Any())
             {
                 await client.SendTextMessageAsync(chatId, $"Chords {string.Join(", ", chordNames)} was not found", replyToMessageId: messageId);
             }
             else
             {
-                foreach (var chord in foundChords)
+                foreach (var chord in chords)
                 {
                     await client.SendTextMessageAsync(chatId, $"{chord}", replyToMessageId: messageId);
                 }
