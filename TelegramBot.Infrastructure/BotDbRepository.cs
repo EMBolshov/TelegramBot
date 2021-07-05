@@ -48,6 +48,14 @@ namespace TelegramBot.Infrastructure
                 return await context.Songs.SingleOrDefaultAsync(s => s.Author == author && s.Name == name);
             }
         }
+        
+        public async Task<IEnumerable<Song>> GetSongListAsync()
+        {
+            await using (var context = new BotDbContext(_connectionString))
+            {
+                return await context.Songs.ToListAsync();
+            }
+        }
 
         public async Task<IEnumerable<Chord>> GetChordsForSongAsync(string author, string name)
         {

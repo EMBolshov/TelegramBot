@@ -11,6 +11,7 @@ namespace TelegramBot.Infrastructure
         Task<IEnumerable<Chord>> GetChordsAsync(IEnumerable<string> names);
         Task AddSongAsync(Song song);
         Task<Song> GetSongAsync(string author, string name);
+        Task<IEnumerable<Song>> GetSongListAsync();
         Task<IEnumerable<Chord>> GetChordsForSongAsync(string author, string name);
     }
 }
