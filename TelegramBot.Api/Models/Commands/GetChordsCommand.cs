@@ -22,7 +22,7 @@ namespace TelegramBot.Api.Models.Commands
             var chatId = message.Chat.Id;
             var messageId = message.MessageId;
 
-            var chordNames = message.Text.Split(new [] {' ', ','}, StringSplitOptions.RemoveEmptyEntries).Skip(1).ToHashSet();
+            var chordNames = message.Text.Split(new [] {' ', ',', '|'}, StringSplitOptions.RemoveEmptyEntries).Skip(1).ToHashSet();
             
             var chords = (await _repository.GetChordsAsync(chordNames)).ToList();
 

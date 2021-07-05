@@ -79,7 +79,7 @@ namespace TelegramBot.Api.Extensions
         /// <returns></returns>
         public static string ParseName(this Message message)
         {
-            var parts = message.Text.Split(' ');
+            var parts = message.Text.Split('|');
             if (parts.Length != 2)
                 throw new ArgumentException($"Command {parts[0]} contain wrong number of arguments");
             
